@@ -23,9 +23,7 @@ app = FastAPI()
 
 # Add CORS middleware
 origins = [
-    "http://127.0.0.1:5500",
-    "http://localhost:8000",
-    "https://yair-stern.github.io/cloud_front_expenses/", 
+    "*"
 ]
 app.add_middleware(
     CORSMiddleware,
