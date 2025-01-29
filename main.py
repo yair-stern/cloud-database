@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -19,6 +20,20 @@ class Expense(Base):
 
 # FastAPI app
 app = FastAPI()
+
+# Add CORS middleware
+origins = [
+    "http://127.0.0.1:5500",
+    "http://localhost:8000",
+    "https://yair-stern.github.io/cloud_front_expenses/", 
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+)
 
 # Create the database tables
 Base.metadata.create_all(bind=engine)
