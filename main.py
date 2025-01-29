@@ -44,7 +44,7 @@ def get_db():
     finally:
         db.close()
 
-@app.post("/create_expenses/")
+@app.post("/create_example_expenses/")
 def create_expenses(db: Session = Depends(get_db)):
     expenses = [
         Expense(description="Food", amount=10.5),
@@ -66,3 +66,9 @@ def create_expenses(db: Session = Depends(get_db)):
 def get_expenses(db: Session = Depends(get_db)):
     expenses = db.query(Expense).all()
     return {"expenses": expenses}
+
+@app.delete("/reset/")
+def reset_data(db: Session = Depends(get_db)):
+    db.query(Expense).delete()
+    db.commit()
+    return {"message": "All expenses have been deleted"}
